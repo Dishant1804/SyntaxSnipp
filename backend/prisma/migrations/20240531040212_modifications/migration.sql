@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Post" ALTER COLUMN "bookmark" DROP NOT NULL,
+ALTER COLUMN "bookmark" SET DEFAULT false,
+ALTER COLUMN "published" DROP NOT NULL;
