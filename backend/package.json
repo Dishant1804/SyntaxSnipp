@@ -7,10 +7,11 @@
     "@dishantmiyani/syntaxsnipp-common": "^1.0.1",
     "@prisma/client": "^5.14.0",
     "@prisma/extension-accelerate": "^1.1.0",
-    "@types/bcrypt": "^5.0.2",
-    "bcrypt": "^5.1.1",
+    "aws-sdk": "^2.1632.0",
     "hono": "^4.4.0",
     "i": "^0.3.7",
+    "mock-aws-s3": "^4.0.2",
+    "nock": "^13.5.4",
     "npm": "^10.8.1",
     "prisma": "^5.14.0"
   },

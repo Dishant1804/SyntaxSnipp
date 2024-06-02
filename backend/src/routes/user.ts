@@ -2,10 +2,8 @@ import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign } from 'hono/jwt'
-import bcrypt from 'bcrypt'
-import { SigninInput, signinInput, signupInput } from '@dishantmiyani/syntaxsnipp-common'
+import { signinInput, signupInput } from '@dishantmiyani/syntaxsnipp-common'
 
-//generic to define the type of env variables
 export const userRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string,
@@ -15,11 +13,17 @@ export const userRouter = new Hono<{
 
 userRouter.post('/signup', async (c) => {
 
+  const body = await c.req.json();
+  const encoder = new TextEncoder();
+  const data = encoder.encode(body.password);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hash));
+  const hashedPassword = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 
-  const body = await c.req.json();
   const { success } = signupInput.safeParse(body);
 
   if (!success) {
@@ -27,10 +31,10 @@ userRouter.post('/signup', async (c) => {
     return c.json({ "error": "incorrect inputs" })
   }
 
-  const hashedPassword = await bcrypt.hash(body.password, 10)
   try {
     const user = await prisma.user.create({
       data: {
+        name: body.name,
         email: body.email,
         password: hashedPassword,
       },
@@ -38,7 +42,7 @@ userRouter.post('/signup', async (c) => {
 
     const token = await sign({ id: user.id }, c.env.JWT_SECRET);
 
-    return c.json({ jwt: token })
+    return c.json({ jwt: token, hashedPassword })
   }
   catch (e) {
     c.status(500);
@@ -73,11 +77,15 @@ userRouter.post('/signin', async (c) => {
       })
     }
 
-    const match = bcrypt.compare(body.password, user.password)
+    const encoder = new TextEncoder();
+    const data = encoder.encode(body.password);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hash));
+    const hashedPassword = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
 
-    if (!match) {
-      c.status(401);
-      return c.json({ "message": "Invalid password" })
+    if(user.password !== hashedPassword){
+      c.status(403)
+      return c.json({"error" : "Invalid credentials" , hashedPassword})
     }
 
     const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
