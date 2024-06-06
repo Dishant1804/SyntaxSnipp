@@ -127,6 +127,18 @@ postRouter.get('/:id', async (c) => {
 
   try {
     const post = await prisma.post.findFirst({
+      select : {
+        title : true,
+        content : true,
+        bookmark : true,
+        id : true,
+        published : true,
+        author : {
+          select : {
+            name : true,
+          }
+        }
+      },
       where: {
         id,
       }
