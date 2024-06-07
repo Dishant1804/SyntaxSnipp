@@ -1,5 +1,4 @@
 import PostCard from "../components/PostCard";
-import Sidebar from "../components/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { useEffect } from "react";
@@ -24,10 +23,6 @@ const Posts = () => {
   }
 
   return (
-    <div className="flex flex-row w-full">
-      <div className="w-[275px] mr-4">
-        <Sidebar />
-      </div>
       <div className="grid grid-cols-1 p-4 gap-3 md:grid-cols-2 lg:grid-cols-4 h-full w-screen place-items-center">
         {state.posts &&
           state.posts.map((post) => {
@@ -43,7 +38,6 @@ const Posts = () => {
             );
           })}
       </div>
-    </div>
   );
 };
 

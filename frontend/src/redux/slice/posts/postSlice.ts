@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice  } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BACKEND_URL } from "../../../config";
 
