@@ -1,4 +1,40 @@
+import { useDispatch } from "react-redux";
+import { sendPost } from "../redux/slice/posts/createPostSlice";
+import { useState } from "react";
+import { PostData } from '../redux/slice/posts/createPostSlice'
+import { AppDispatch } from "../redux/store";
+import { useNavigate } from "react-router-dom";
+
 const Post = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+
+  const handleTitle = (e: any) => {
+    setTitle(e.target.value);
+  }
+  const handleDescription = (e: any) => {
+    setDescription(e.target.value);
+  }
+  const handleContent = (e: any) => {
+    setContent(e.target.value);
+  }
+
+  const handleClick = () => {
+    const postData: PostData = {
+      title,
+      description,
+      content,
+    };
+    dispatch(sendPost(postData));
+    setTitle("");
+    setContent("");
+    setDescription("");
+    navigate('/posts');
+  };
+
   return (
     <>
       <div className="flex flex-col justify-center items-center w-full px-4 md:w-5/6">
@@ -7,6 +43,8 @@ const Post = () => {
             Title
           </label>
           <input
+            onChange={handleTitle}
+            required
             type="text"
             placeholder="Title"
             maxLength={100}
@@ -18,6 +56,7 @@ const Post = () => {
             Description
           </label>
           <textarea
+            onChange={handleDescription}
             rows={2}
             placeholder="Description"
             maxLength={200}
@@ -29,12 +68,13 @@ const Post = () => {
             Content
           </label>
           <textarea
+            onChange={handleContent}
             maxLength={10000}
             placeholder="Write the code Snippet here..."
             className="p-2 rounded-md h-[400px] w-full px-4 text-black border border-slate-500 resize-none"
           />
         </div>
-        <button className="w-full sm:w-3/4 md:w-2/3 mt-4 bg-gray-800 text-white p-1 rounded-md">
+        <button className="w-full sm:w-3/4 md:w-2/3 mt-4 bg-gray-800 text-white p-1 rounded-md" onClick={handleClick}>
           Publish
         </button>
       </div>

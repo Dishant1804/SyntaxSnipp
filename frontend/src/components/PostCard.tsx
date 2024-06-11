@@ -1,6 +1,6 @@
 import { faBookmark, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fetchPostsWithId } from "../redux/slice/posts/postsWithId";
+import { fetchPostsWithId } from "../redux/slice/posts/postsWithIdSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
@@ -15,8 +15,8 @@ interface PostcardProps {
 
 const PostCard = ({ title, content, bookmark, authorName, id }: PostcardProps) => {
   const navigate = useNavigate();
-  const dispatch : AppDispatch = useDispatch();
-  const state = useSelector((state : RootState) => state.postWithId);
+  const dispatch: AppDispatch = useDispatch();
+  const state = useSelector((state: RootState) => state.postWithId);
 
   const handleDivClick = () => {
     dispatch(fetchPostsWithId(id))
