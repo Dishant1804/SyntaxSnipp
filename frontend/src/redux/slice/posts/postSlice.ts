@@ -15,6 +15,7 @@ interface singlePost {
   id: string;
   title: string;
   content: string;
+  description: string;
   bookmark: boolean;
   author: {
     name: string;

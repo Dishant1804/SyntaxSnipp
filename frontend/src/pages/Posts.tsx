@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { useEffect } from "react";
 import { fetchPosts } from "../redux/slice/posts/postSlice";
+import CreatePost from "../components/CreatePost";
 
 const Posts = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -24,6 +25,7 @@ const Posts = () => {
 
   return (
       <div className="grid grid-cols-1 p-4 gap-3 md:grid-cols-2 lg:grid-cols-4 h-full w-screen place-items-center">
+        <div>
         {state.posts &&
           state.posts.map((post) => {
             return (
@@ -37,6 +39,10 @@ const Posts = () => {
               />
             );
           })}
+        </div>
+        <div>
+          <CreatePost/>
+        </div>
       </div>
   );
 };
