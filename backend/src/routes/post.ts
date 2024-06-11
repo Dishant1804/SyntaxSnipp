@@ -50,6 +50,7 @@ postRouter.post('/', async (c) => {
       data: {
         title: body.title,
         content: body.content,
+        description: body.description,
         authorId: userId,
       }
     })
@@ -86,6 +87,8 @@ postRouter.put('/', async (c) => {
         title: body.title,
         content: body.content,
         bookmark: body.bookmark,
+        description: body.description,
+        like : body.like,
       }
     })
 
@@ -106,7 +109,9 @@ postRouter.get('/bulk', async (c) => {
     select : {
       title : true,
       content : true,
+      description : true,
       bookmark : true,
+      like : true,
       id : true,
       author : {
         select : {
@@ -130,7 +135,9 @@ postRouter.get('/:id', async (c) => {
       select : {
         title : true,
         content : true,
+        description : true,
         bookmark : true,
+        like : true,
         id : true,
         published : true,
         author : {
