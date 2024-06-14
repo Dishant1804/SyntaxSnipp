@@ -1,7 +1,7 @@
 const Sidebar = () => {
   return (
     <>
-      <div className="flex flex-col h-screen fixed p-3 w-60 lg:w-64 bg-gray-50 text-gray-800 shadow-md">
+      <div className="flex flex-col h-screen fixed p-3 w-60 lg:w-64 bg-gray-50 text-gray-800 shadow-md z-[10]">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">Dashboard</h2>

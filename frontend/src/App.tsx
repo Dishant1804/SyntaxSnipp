@@ -11,11 +11,11 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-row w-screen overflow-x-hidden">
-        <div className="w-1/6 mr-4">
+      <div className="flex flex-row w-screen overflow-hidden">
+        <div className="w-1/6 mr-4 hidden lg:flex">
           <Sidebar />
         </div>
-        <div className="flex w-5/6">
+        <div className="flex justify-center lg:w-5/6">
           <BrowserRouter>
             <Routes>
               <Route path="/signin" element={<Signin />} />

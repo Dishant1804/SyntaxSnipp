@@ -13,8 +13,10 @@ const ExpandedPost = () => {
         <p className='text-lg md:text-xl mt-4 text-gray-500'>
           {state.data?.description}
         </p>
-        <div className='text-lg md:text-xl mt-4'>
-          <MDEditor.Markdown source={state.data?.content || ''} />
+        <div className='text-lg md:text-xl mt-4 max-w-full overflow-x-auto'>
+          <div className='w-full'>
+            <MDEditor.Markdown source={state.data?.content || ''} />
+          </div>
         </div>
       </div>
     </div>
