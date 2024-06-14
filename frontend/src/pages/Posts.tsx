@@ -25,7 +25,6 @@ const Posts = () => {
 
   return (
       <div className="grid grid-cols-1 p-4 gap-3 md:grid-cols-2 lg:grid-cols-4 h-full w-screen place-items-center">
-        <div>
         {state.posts &&
           state.posts.map((post) => {
             return (
@@ -35,11 +34,11 @@ const Posts = () => {
                 title={post.title}
                 content={post.content}
                 bookmark={post.bookmark}
+                description={post.description}
                 authorName={post.author.name || "Anonymous"}
               />
             );
           })}
-        </div>
         <div>
           <CreatePost/>
         </div>

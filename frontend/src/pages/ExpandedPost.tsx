@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import MDEditor from '@uiw/react-md-editor';
 
 const ExpandedPost = () => {
   const state = useSelector((state: RootState) => state.postWithId);
@@ -12,11 +13,8 @@ const ExpandedPost = () => {
         <p className='text-lg md:text-xl mt-4 text-gray-500'>
           {state.data?.description}
         </p>
-        {/* <div className='text-base md:text-lg mt-4 border-b border-t h-[50px]'>
-          profile modification bookmark like readmins
-        </div> */}
         <div className='text-lg md:text-xl mt-4'>
-          {state.data?.content}
+          <MDEditor.Markdown source={state.data?.content || ''} />
         </div>
       </div>
     </div>

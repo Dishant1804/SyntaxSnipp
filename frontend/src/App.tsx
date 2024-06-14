@@ -11,11 +11,11 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col md:flex-row w-full">
-        <div className="md:w-1/4 md:block hidden">
+      <div className="flex flex-row w-screen overflow-x-hidden">
+        <div className="w-1/6 mr-4">
           <Sidebar />
         </div>
-        <div className="flex-1">
+        <div className="flex w-5/6">
           <BrowserRouter>
             <Routes>
               <Route path="/signin" element={<Signin />} />
@@ -26,7 +26,7 @@ function App() {
             </Routes>
           </BrowserRouter>
         </div>
-      </div>
+      </div >
     </>
   );
 }

@@ -7,7 +7,7 @@ const CreatePost = () => {
     navigate("/createpost");
   }
 
-  return <button className="absolute bottom-0 right-0 p-4" onClick={handleClick}>    
+  return <button className="absolute bottom-0 right-0 p-4 z-[2]" onClick={handleClick}>    
     create post 
   </button>
 }
