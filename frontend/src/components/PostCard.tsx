@@ -6,12 +6,12 @@ import { AppDispatch, RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 
 interface PostcardProps {
+  id: string,
   title: string,
   content: string,
   bookmark: boolean,
-  id: string,
-  description : string,
   authorName: string,
+  description : string,
 }
 
 const PostCard = ({ title, content, bookmark, authorName, id , description}: PostcardProps) => {
