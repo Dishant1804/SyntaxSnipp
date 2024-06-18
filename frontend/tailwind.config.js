@@ -9,7 +9,7 @@ export default {
       fontFamily : {
         'Vollkron' : ['Vollkron', "serif"]
       }
-    },
+    }
   },
   plugins: [],
 }

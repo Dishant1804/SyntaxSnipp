@@ -6,6 +6,6 @@
 
 @layer base {
   body {
-    @apply min-h-screen leading-relaxed
+    @apply min-h-screen leading-relaxed 
   }
 }
