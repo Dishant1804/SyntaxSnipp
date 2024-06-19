@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { useEffect } from "react";
 import { fetchPosts } from "../redux/slice/posts/postSlice";
-import CreatePost from "../components/CreatePost";
 
 const Posts = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -39,9 +38,6 @@ const Posts = () => {
               />
             );
           })}
-        <div>
-          <CreatePost/>
-        </div>
       </div>
   );
 };

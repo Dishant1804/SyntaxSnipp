@@ -1,13 +1,23 @@
 import { faBookmark, faHeart, faHouse, faSquarePlus, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 
-const Sidebar = ({ showSidebar, toggleSidebar } : { showSidebar : boolean , toggleSidebar : ()=> void}  ) => {
+const Sidebar = ({ showSidebar, toggleSidebar }: { showSidebar: boolean, toggleSidebar: () => void }) => {
+  const navigate = useNavigate();
+
+  const handleHome = () => {
+    navigate('/posts')
+  }
+  const handleCreatePost = () => {
+    navigate("/createpost");
+  }
+
   return (
     <div className={`fixed z-20 inset-0 overflow-y-auto bg-gray-900 bg-opacity-50 lg:relative lg:bg-transparent lg:block ${showSidebar ? 'block' : 'hidden'}`}>
-      <div className="flex flex-col h-screen fixed p-3 w-60 lg:w-64 bg-gray-50 text-gray-800 shadow-md z-[10]">
+      <div className="flex flex-col h-screen fixed p-3 w-60 lg:w-1/6 bg-gray-100 text-gray-800 shadow-md z-[10]">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h1 className="flex-none text-2xl font-semibold mt-2" aria-label="Dashboard">Dashboard</h1>
+            <h1 className="flex-none text-2xl font-semibold mt-2 lg:pl-8" aria-label="Dashboard">Dashboard</h1>
             <button
               className="p-2 lg:hidden"
               onClick={toggleSidebar}
@@ -23,46 +33,51 @@ const Sidebar = ({ showSidebar, toggleSidebar } : { showSidebar : boolean , togg
               </svg>
             </button>
           </div>
-          <nav className="hs-accordion-group p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
+          <nav className="hs-accordion-group p-6 w-full flex flex-col " data-hs-accordion-always-open>
             <ul className="space-y-1.5">
               <li>
-                <a className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-base text-gray-700 rounded-lg hover:bg-gray-100" href="#">
+                <button
+                  type="button"
+                  className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100  text-gray-700 rounded-lg hover:bg-gray-200 lg:pl-8 md:text-lg lg:text-xl w-full"
+                  onClick={handleHome}
+                >
                   <FontAwesomeIcon icon={faHouse} className="text-lg" />
                   Home
-                </a>
+                </button>
               </li>
-
-              <li className="hs-accordion" id="users-accordion">
-                <button type="button" className="hs-accordion-toggle hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-base text-gray-700 rounded-lg hover:bg-gray-100">
+              <li>
+                <button
+                  type="button"
+                  className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100  text-gray-700 rounded-lg hover:bg-gray-200 lg:pl-8 md:text-lg lg:text-xl w-full"
+                >
                   <FontAwesomeIcon icon={faBookmark} className="text-lg" />
                   Bookmarks
                 </button>
               </li>
-
-              <li className="hs-accordion" id="account-accordion">
-                <button type="button" className="hs-accordion-toggle hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-base text-gray-700 rounded-lg hover:bg-gray-100">
-                  <FontAwesomeIcon icon={faUser} className="text-lg" />
-                  Account
-                </button>
-
-                <div id="account-accordion" className="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                </div>
-              </li>
-
-              <li className="hs-accordion" id="projects-accordion">
-                <button type="button" className="hs-accordion-toggle hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-base text-gray-700 rounded-lg hover:bg-gray-100">
+              <li>
+                <button type="button" className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100  text-gray-700 rounded-lg hover:bg-gray-200 lg:pl-8 md:text-lg lg:text-xl w-full">
                   <FontAwesomeIcon icon={faHeart} className="text-lg" />
                   Liked Posts
                 </button>
-
-                <div id="projects-accordion" className="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                </div>
               </li>
-
-              <li><a className="flex items-center gap-x-3.5 py-2 px-2.5 text-base text-gray-700 rounded-lg hover:bg-gray-100" href="#">
-                <FontAwesomeIcon icon={faSquarePlus} className="text-lg" />
-                Create Post
-              </a></li>
+              <li>
+                <button
+                  type="button"
+                  className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100  text-gray-700 rounded-lg hover:bg-gray-200 lg:pl-8 md:text-lg lg:text-xl w-full"
+                  onClick={handleCreatePost}
+                >
+                  <FontAwesomeIcon icon={faSquarePlus} className="text-lg" />
+                  Create Post
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100  text-gray-700 rounded-lg hover:bg-gray-200 lg:pl-8 md:text-lg lg:text-xl w-full">
+                  <FontAwesomeIcon icon={faUser} className="text-lg" />
+                  Account
+                </button>
+              </li>
             </ul>
           </nav>
         </div>

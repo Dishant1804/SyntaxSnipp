@@ -9,7 +9,7 @@ import Post from "./pages/Post";
 import { useState } from "react";
 
 function App() {
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);

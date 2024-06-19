@@ -5,7 +5,7 @@ const Navbar = ({ toggleSidebar, showSidebar } : { toggleSidebar : ()=> void, sh
     <div className="flex">
       <nav className="bg-white border-gray-200 dark:bg-gray-900 fixed top-0 z-10 w-full lg:relative">
         <div className="max-w-screen grid grid-cols-3 mx-auto p-3">
-          <span className="text-2xl font-semibold whitespace-nowrap pl-0 lg:pl-16 dark:text-white">
+          <span className="text-3xl font-semibold whitespace-nowrap pl-0 lg:pl-16 dark:text-white">
             Syntax Snipp
           </span>
           <div className="hidden justify-center md:flex">
