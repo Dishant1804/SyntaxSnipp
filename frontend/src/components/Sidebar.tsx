@@ -73,6 +73,16 @@ const Sidebar = ({ showSidebar, toggleSidebar }: { showSidebar: boolean, toggleS
               <li>
                 <button
                   type="button"
+                  className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100  text-gray-700 rounded-lg hover:bg-gray-200 lg:pl-8 md:text-lg lg:text-xl w-full"
+                  onClick={handleCreatePost}
+                >
+                  <FontAwesomeIcon icon={faSquarePlus} className="text-lg" />
+                  Your Post
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
                   className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100  text-gray-700 rounded-lg hover:bg-gray-200 lg:pl-8 md:text-lg lg:text-xl w-full">
                   <FontAwesomeIcon icon={faUser} className="text-lg" />
                   Account

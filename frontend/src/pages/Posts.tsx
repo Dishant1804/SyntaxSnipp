@@ -31,7 +31,6 @@ const Posts = () => {
                 key={post.id}
                 id={post.id}
                 title={post.title}
-                content={post.content}
                 bookmark={post.bookmark}
                 description={post.description}
                 authorName={post.author.name || "Anonymous"}
