@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { Prisma, PrismaClient } from '@prisma/client/edge';
+import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
 import { verify } from 'hono/jwt';
 import { createPost, updatePost } from '@dishantmiyani/syntaxsnipp-common';
@@ -61,7 +61,7 @@ postRouter.post('/', async (c) => {
   }
 });
 
-postRouter.patch('/', async (c) => {
+postRouter.patch('/edit', async (c) => {
   const userId = c.get('userId');
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -75,19 +75,18 @@ postRouter.patch('/', async (c) => {
     return c.json({ error: "Invalid input data" });
   }
 
-  const { title, content, bookmark, description, like, id } = parsed.data;
+  const { title, content, description, id } = parsed.data;
 
   const updateData: { [key: string]: any } = {};
   if (title !== undefined) updateData.title = title;
   if (content !== undefined) updateData.content = content;
-  if (bookmark !== undefined) updateData.bookmark = bookmark;
   if (description !== undefined) updateData.description = description;
-  if (like !== undefined) updateData.like = like;
 
   try {
-    const post = await prisma.post.update({
+    const post = await prisma.post.updateMany({
       where: {
         id: id,
+        authorId: userId,
       },
       data: updateData,
     });
@@ -95,6 +94,90 @@ postRouter.patch('/', async (c) => {
     return c.json({ post });
   } catch (e: any) {
     console.error("Error updating post:", e);
+    c.status(500);
+    return c.json({ error: "Internal server error" });
+  }
+});
+
+postRouter.patch('/bookmark', async (c) => {
+  const userId = c.get('userId');
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const body = await c.req.json();
+  const { id, bookmark } = body;
+
+  if (typeof id !== 'string' || typeof bookmark !== 'boolean') {
+    c.status(400);
+    return c.json({ error: "Invalid input data" });
+  }
+
+  try {
+    const existingBookmark = await prisma.bookmark.findUnique({
+      where: {
+        userId_postId: {
+          userId: userId,
+          postId: id,
+        },
+      },
+    });
+
+    if (bookmark) {
+      if (!existingBookmark) {
+        await prisma.bookmark.create({
+          data: {
+            userId: userId,
+            postId: id,
+          },
+        });
+      }
+    } else {
+      if (existingBookmark) {
+        await prisma.bookmark.deleteMany({
+          where: {
+            userId: userId,
+            postId: id,
+          },
+        });
+      }
+    }
+
+    return c.json({ bookmark });
+  } catch (e: any) {
+    console.error("Error updating bookmark:", e);
+    c.status(500);
+    return c.json({ error: "Internal server error" });
+  }
+});
+
+// Fetch Bookmarks Endpoint
+postRouter.get('/bookmarks', async (c) => {
+  const userId = c.get('userId');
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const bookmarks = await prisma.bookmark.findMany({
+      where: {
+        userId: userId,
+      },
+      include: {
+        post: true,
+      },
+    });
+
+    const formattedBookmarks = bookmarks.map((bookmark) => ({
+      id: bookmark.postId,
+      bookmark: true,
+    }));
+
+    return c.json(formattedBookmarks);
+  } catch (e: any) {
+    console.error("Error fetching bookmarks:", e);
+    c.status(500);
+    return c.json({ error: "Internal server error" });
   }
 });
 
@@ -114,8 +197,6 @@ postRouter.get('/bulk', async (c) => {
       title: true,
       content: true,
       description: true,
-      bookmark: true,
-      like: true,
       id: true,
       author: {
         select: {
@@ -140,8 +221,6 @@ postRouter.get('/:id', async (c) => {
         title: true,
         content: true,
         description: true,
-        bookmark: true,
-        like: true,
         id: true,
         published: true,
         author: {
