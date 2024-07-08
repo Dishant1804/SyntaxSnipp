@@ -10,6 +10,13 @@ const Quote = () => {
     <div>
       Dive into realm of syntax
     </div>
+    <div>
+      username : user@gmail.com
+      password : 12345678
+
+      username : user2@gmail.com
+      password : 123456789
+    </div>
   </div>
 }
 

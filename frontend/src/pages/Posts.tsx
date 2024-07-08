@@ -8,11 +8,11 @@ const Posts = () => {
   const dispatch: AppDispatch = useDispatch();
   const state = useSelector((state: RootState) => state.post);
 
-  useEffect(() => {
+  useEffect(() => { 
     if (!state.posts) {
       dispatch(fetchPosts());
     }
-  }, []);
+  }, [dispatch, state.posts]);
 
   if (state.isLoading) {
     return <div>Loading...</div>;
@@ -23,21 +23,20 @@ const Posts = () => {
   }
 
   return (
-      <div className="grid grid-cols-1 p-4 gap-3 md:grid-cols-2 lg:grid-cols-4 h-full w-screen place-items-center">
-        {state.posts &&
-          state.posts.map((post) => {
-            return (
-              <PostCard
-                key={post.id}
-                id={post.id}
-                title={post.title}
-                bookmark={post.bookmark}
-                description={post.description}
-                authorName={post.author.name || "Anonymous"}
-              />
-            );
-          })}
-      </div>
+    <div className="mt-4 flex flex-col justify-center items-center h-full w-screen ">
+      {state.posts &&
+        state.posts.map((post) => {
+          return (
+            <PostCard
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              description={post.description}
+              authorName={post.author.name || "Anonymous"}
+            />
+          );
+        })}
+    </div>
   );
 };
 

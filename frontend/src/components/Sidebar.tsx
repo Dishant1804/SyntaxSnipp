@@ -55,12 +55,6 @@ const Sidebar = ({ showSidebar, toggleSidebar }: { showSidebar: boolean, toggleS
                 </button>
               </li>
               <li>
-                <button type="button" className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100  text-gray-700 rounded-lg hover:bg-gray-200 lg:pl-8 md:text-lg lg:text-xl w-full">
-                  <FontAwesomeIcon icon={faHeart} className="text-lg" />
-                  Liked Posts
-                </button>
-              </li>
-              <li>
                 <button
                   type="button"
                   className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100  text-gray-700 rounded-lg hover:bg-gray-200 lg:pl-8 md:text-lg lg:text-xl w-full"
@@ -74,7 +68,7 @@ const Sidebar = ({ showSidebar, toggleSidebar }: { showSidebar: boolean, toggleS
                 <button
                   type="button"
                   className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100  text-gray-700 rounded-lg hover:bg-gray-200 lg:pl-8 md:text-lg lg:text-xl w-full"
-                  onClick={handleCreatePost}
+                  // onClick={}
                 >
                   <FontAwesomeIcon icon={faSquarePlus} className="text-lg" />
                   Your Post
